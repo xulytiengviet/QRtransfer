@@ -1,0 +1,7 @@
+{
+  "schema": "qrt-field-trials-v2",
+  "planId": "REPLACE",
+  "artifactSha256": null,
+  "commit": null,
+  "trials": []
+}

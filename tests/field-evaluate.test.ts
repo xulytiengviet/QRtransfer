@@ -1,0 +1,10 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import {evaluate,wilson} from "../research/field-evaluate.mjs";
+const sha="a".repeat(64),commit="b".repeat(40),utc="2026-11-27T00:00:00Z";
+const plan={schema:"qrt-field-plan-v2",planId:"test-only",artifactSha256:sha,commit,registeredUtc:utc,cells:[{id:"A",channel:"audio",sender:"a",receiver:"b",condition:"synthetic test fixture",distanceM:1,lux:50,noiseDBA:60,rainMmH:0,maxLatencyS:10,minSuccess:.99,minTrials:10}]};
+const data=(n:number)=>({schema:"qrt-field-trials-v2",planId:plan.planId,artifactSha256:sha,commit,trials:Array.from({length:n},(_,i)=>({id:String(i),cellId:"A",kind:"physical",utc,operator:"fixture",instrumentLog:"fixture",instrumentLogSha256:sha,expectedSha256:sha,receivedSha256:sha,outcome:"verified",elapsedS:2,payloadBytes:16,energyWh:.01}))});
+test("empty and insufficient trial data never pass",()=>{assert.equal(evaluate(plan,data(0)).statisticalGatesMet,false);assert.equal(evaluate(plan,data(10)).statisticalGatesMet,false);assert.ok(wilson(380,380)[0]<.99);assert.ok(wilson(381,381)[0]>=.99);});
+test("statistical pass is not certification",()=>{const r=evaluate(plan,data(381));assert.equal(r.statisticalGatesMet,true);assert.equal(r.certified,false);assert.equal(r.independentReviewRequired,true);});
+test("reject mismatch, duplicate, synthetic and unplanned records",()=>{for(const mutate of [(d:any)=>d.trials[0].receivedSha256="c".repeat(64),(d:any)=>d.trials.push(d.trials[0]),(d:any)=>d.trials[0].kind="synthetic",(d:any)=>d.trials[0].cellId="B",(d:any)=>d.artifactSha256="c".repeat(64)]){const d=data(1);mutate(d);assert.throws(()=>evaluate(plan,d));}});
+test("timeouts count as failures and wrong accepted message blocks gate",()=>{let d=data(381);d.trials[0].outcome="timeout";(d.trials[0] as any).receivedSha256=null;assert.equal(evaluate(plan,d).results[0].verified,380);d=data(381);d.trials[0].outcome="wrong";d.trials[0].receivedSha256="c".repeat(64);assert.equal(evaluate(plan,d).statisticalGatesMet,false);});

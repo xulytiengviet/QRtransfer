@@ -1,0 +1,23 @@
+{
+  "schema": "qrt-field-plan-v2",
+  "planId": "REPLACE",
+  "artifactSha256": null,
+  "commit": null,
+  "registeredUtc": null,
+  "cells": [
+    {
+      "id": "audio-A",
+      "channel": "audio",
+      "sender": "REPLACE model/OS/browser",
+      "receiver": "REPLACE model/OS/browser",
+      "condition": "dry fixed",
+      "distanceM": 1,
+      "lux": 50,
+      "noiseDBA": 60,
+      "rainMmH": 0,
+      "maxLatencyS": 10,
+      "minSuccess": 0.99,
+      "minTrials": 381
+    }
+  ]
+}

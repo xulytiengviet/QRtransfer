@@ -1,0 +1,39 @@
+name: Rescue assurance evidence
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  evidence:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: mkdir -p evidence
+      - name: Record regression tests
+        run: |
+          set -o pipefail
+          npm test 2>&1 | tee evidence/test.log
+      - name: Build and verify portable artifact
+        run: |
+          npm run build:all
+          cmp public/rescue.html dist/rescue.html
+      - name: SBOM and release gate
+        run: |
+          npm sbom --sbom-format cyclonedx > evidence/sbom.cdx.json
+          node release/check-rescue-release.mjs v3.1.0-rc.2
+          if node release/check-rescue-release.mjs v4.0.0; then exit 1; fi
+          node release/make-evidence.mjs
+          cp public/rescue.html evidence/rescue.html
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rescue-assurance-${{ github.sha }}
+          path: evidence/
+          if-no-files-found: error

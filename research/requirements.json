@@ -1,0 +1,90 @@
+{
+  "schema": "qrt-traceability-v1",
+  "baselineCommit": "3c884440ea123aaa716b72e50f44ecf960fabf59",
+  "requirements": [
+    {
+      "id": "R01",
+      "requirement": "Exact Vietnamese text and CRC rejection",
+      "evidence": "tests/rescue.test.ts",
+      "status": "software-verified",
+      "hazard": "H02"
+    },
+    {
+      "id": "R02",
+      "requirement": "GF27 six erasures, reject seven",
+      "evidence": "benchmarks/rescue-rc1-isolate.json",
+      "status": "software-verified",
+      "hazard": "H02"
+    },
+    {
+      "id": "R03",
+      "requirement": "Offline no external dependency, actual mobile/desktop permission matrix",
+      "evidence": "tests/rescue.test.ts",
+      "status": "partial",
+      "hazard": "H10"
+    },
+    {
+      "id": "R04",
+      "requirement": "User review and stale GPS controls, human factors",
+      "evidence": "public/rescue.html",
+      "status": "partial",
+      "hazard": "H01"
+    },
+    {
+      "id": "R05",
+      "requirement": "Session cancellation and stale display behavior on actual browsers",
+      "evidence": "public/rescue.html",
+      "status": "partial",
+      "hazard": "H04 H05"
+    },
+    {
+      "id": "R06",
+      "requirement": "Physical delivery reliability, range, latency and energy",
+      "evidence": "research/field-evaluate.mjs",
+      "status": "missing",
+      "hazard": "H08"
+    },
+    {
+      "id": "R07",
+      "requirement": "Independent audio/light exposure review",
+      "evidence": "docs/technical/rescue-field-protocol.md",
+      "status": "missing",
+      "hazard": "H06"
+    },
+    {
+      "id": "R08",
+      "requirement": "Threat model, authenticity, privacy assessment",
+      "evidence": "docs/technical/rescue-safety-case.md",
+      "status": "missing",
+      "hazard": "H07"
+    },
+    {
+      "id": "R09",
+      "requirement": "Artifact digest, SBOM and release evidence",
+      "evidence": "release/make-evidence.mjs",
+      "status": "partial",
+      "hazard": "H09"
+    },
+    {
+      "id": "R10",
+      "requirement": "Operational readback and fallback exercise",
+      "evidence": "docs/technical/rescue-assurance.md",
+      "status": "missing",
+      "hazard": "H03"
+    },
+    {
+      "id": "R11",
+      "requirement": "Applicable national and product certification review",
+      "evidence": "docs/technical/rescue-assurance.md",
+      "status": "missing",
+      "hazard": "H09"
+    },
+    {
+      "id": "R12",
+      "requirement": "Independent signed acceptance bound to artifact",
+      "evidence": "release/rescue-readiness.json",
+      "status": "missing",
+      "hazard": "H01-H10"
+    }
+  ]
+}

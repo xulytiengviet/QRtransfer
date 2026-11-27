@@ -1,6 +1,6 @@
 {
   "schema": "qrt-rescue-readiness-v1",
-  "version": "3.1.0-rc.1",
+  "version": "3.1.0-rc.2",
   "classification": "research-release-candidate",
   "certified": false,
   "stableAuthorized": false,
@@ -42,5 +42,11 @@
       "reference": null
     }
   },
-  "certificate": null
+  "certificate": null,
+  "previousVerifiedBaseline": {
+    "commit": "3c884440ea123aaa716b72e50f44ecf960fabf59",
+    "ci": "https://github.com/xulytiengviet/QRtransfer/actions/runs/45959343751",
+    "matrix": "https://github.com/xulytiengviet/QRtransfer/actions/runs/45959343788",
+    "pages": "https://github.com/xulytiengviet/QRtransfer/actions/runs/45959343792"
+  }
 }
