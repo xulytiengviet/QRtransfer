@@ -1,0 +1,77 @@
+{
+  "kind": "CPU-only JavaScript isolate; deterministic synthetic loss; no camera; milliseconds include encode/decode and recovery; not comparable to device optical goodput",
+  "runs": [
+    {
+      "size": 65536,
+      "loss": 0,
+      "k": 53,
+      "attempts": 53,
+      "accepted": 53,
+      "ms": 88,
+      "exact": true
+    },
+    {
+      "size": 65536,
+      "loss": 0.1,
+      "k": 53,
+      "attempts": 70,
+      "accepted": 59,
+      "ms": 206,
+      "exact": true
+    },
+    {
+      "size": 65536,
+      "loss": 0.3,
+      "k": 53,
+      "attempts": 97,
+      "accepted": 63,
+      "ms": 383,
+      "exact": true
+    },
+    {
+      "size": 65536,
+      "loss": 0.5,
+      "k": 53,
+      "attempts": 165,
+      "accepted": 83,
+      "ms": 614,
+      "exact": true
+    },
+    {
+      "size": 1048576,
+      "loss": 0,
+      "k": 837,
+      "attempts": 837,
+      "accepted": 837,
+      "ms": 1336,
+      "exact": true
+    },
+    {
+      "size": 1048576,
+      "loss": 0.1,
+      "k": 837,
+      "attempts": 1216,
+      "accepted": 1092,
+      "ms": 3891,
+      "exact": true
+    },
+    {
+      "size": 1048576,
+      "loss": 0.3,
+      "k": 837,
+      "attempts": 1661,
+      "accepted": 1136,
+      "ms": 6809,
+      "exact": true
+    },
+    {
+      "size": 1048576,
+      "loss": 0.5,
+      "k": 837,
+      "attempts": 3435,
+      "accepted": 1689,
+      "ms": 13915,
+      "exact": true
+    }
+  ]
+}
