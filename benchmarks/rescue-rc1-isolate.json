@@ -1,0 +1,15 @@
+{
+  "kind": "executed synthetic FEC regression only",
+  "version": "3.1.0-rc.1",
+  "seed": 123,
+  "cases": 128,
+  "exactRecoverySixErasures": 128,
+  "rejectedSevenErasures": 128,
+  "cv": {
+    "ok": true,
+    "tests": 23,
+    "failures": []
+  },
+  "physicalFieldTest": false,
+  "certified": false
+}
