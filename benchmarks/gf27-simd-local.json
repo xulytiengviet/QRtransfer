@@ -1,0 +1,34 @@
+{
+  "kind": "Local CPU kernel benchmark only; includes copying into and out of WASM memory; not browser optical performance; SIMD opt-in only",
+  "node": "v22.16.0",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "wasmBytes": 1460,
+  "wasmSha256": "39dc6a95889ddd8e319b3f29370a2a72d0366243b5e10a75a9d0cbdc7cff380a",
+  "fieldCases": 19683,
+  "results": [
+    {
+      "n": 2300,
+      "loops": 2000,
+      "repeat": 5,
+      "jsMs": 8.196116,
+      "wasmMs": 7.17289,
+      "speedup": 1.14265
+    },
+    {
+      "n": 4600,
+      "loops": 2000,
+      "repeat": 5,
+      "jsMs": 13.233361,
+      "wasmMs": 13.486204,
+      "speedup": 0.98125
+    },
+    {
+      "n": 65536,
+      "loops": 2000,
+      "repeat": 5,
+      "jsMs": 184.550175,
+      "wasmMs": 192.261148,
+      "speedup": 0.95989
+    }
+  ]
+}
