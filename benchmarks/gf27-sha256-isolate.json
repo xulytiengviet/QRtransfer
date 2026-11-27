@@ -1,0 +1,17 @@
+{
+  "kind": "Executed from fetched gf27.mjs source in JavaScript isolate, synthetic loss only",
+  "seed": 123456789,
+  "bytes": 1048576,
+  "wireBlockBytes": 1463,
+  "nominalLoss": 0.3,
+  "k": 837,
+  "attempts": 1661,
+  "accepted": 1136,
+  "originalSha256": "df71f300216af689e3f340224476d32bd9f0dfff24ee71028fcc33a834cdad0a",
+  "recoveredSha256": "df71f300216af689e3f340224476d32bd9f0dfff24ee71028fcc33a834cdad0a",
+  "tamperedSha256": "ddfe6a0aa5e23c72f5bc10c47cf4a67b9c262adc4fe35b843c65c19d5c7a365e",
+  "knownSha256Vector": "abc",
+  "byteEquality": true,
+  "verified": true,
+  "tamperDetected": true
+}
