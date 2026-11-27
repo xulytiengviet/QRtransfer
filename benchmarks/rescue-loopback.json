@@ -1,0 +1,74 @@
+{
+  "version": "QRT-M3/1",
+  "kind": "executed synthetic wave/light loopback, not physical testing",
+  "cvnssSelfTest": {
+    "ok": true,
+    "tests": 23,
+    "failures": []
+  },
+  "results": [
+    {
+      "text": "can cuu ho",
+      "mode": 1,
+      "trits": 90,
+      "exact": true,
+      "audio": true,
+      "light": true,
+      "corruptRejected": true
+    },
+    {
+      "text": "Cần cứu hộ, 5 người.",
+      "mode": 0,
+      "trits": 234,
+      "exact": true,
+      "audio": true,
+      "light": true,
+      "corruptRejected": true
+    },
+    {
+      "text": "tôi yêu tiếng Việt",
+      "mode": 0,
+      "trits": 204,
+      "exact": true,
+      "audio": true,
+      "light": true,
+      "corruptRejected": true
+    },
+    {
+      "text": "SOS 112",
+      "mode": 0,
+      "trits": 102,
+      "exact": true,
+      "audio": true,
+      "light": true,
+      "corruptRejected": true
+    },
+    {
+      "text": "Đường ngập 2m 🚨",
+      "mode": 0,
+      "trits": 204,
+      "exact": true,
+      "audio": true,
+      "light": true,
+      "corruptRejected": true
+    },
+    {
+      "text": "á",
+      "mode": 0,
+      "trits": 78,
+      "exact": true,
+      "audio": true,
+      "light": true,
+      "corruptRejected": true
+    },
+    {
+      "text": "sẽ hề mồ mộ võ",
+      "mode": 1,
+      "trits": 117,
+      "exact": true,
+      "audio": true,
+      "light": true,
+      "corruptRejected": true
+    }
+  ]
+}
