@@ -12,6 +12,8 @@
 //   the probing, so everything here is capability-gated rather than UA-gated.
 
 import { LTDecoder } from "../shared/fountain";
+import { GF27Decoder, rawBlockLen } from "../shared/gf27.mjs";
+import { FLAG_GF27 } from "../shared/protocol";
 import {
   estimateTransferProgress,
   expectedFountainOverhead,
@@ -123,7 +125,7 @@ const NO_SIGNAL_DISMISSED_MS = 15_000;
 const STATS_WINDOW_MS = 2000;
 
 let stream: MediaStream | null = null;
-let decoder: LTDecoder | null = null;
+let decoder: LTDecoder | GF27Decoder | null = null;
 let streamKey = "";
 let reportSessionId = 0; // pairs this run with the sender's diagnostics post
 let startTs = 0;
@@ -924,7 +926,7 @@ function onDecoded(bytes: Uint8Array, box?: SymbolBox, info?: SymbolInfo) {
   // just the session id — see the note on it in protocol.ts.
   const identity = streamIdentity(header);
   if (!decoder || streamKey !== identity) {
-    decoder = new LTDecoder(header.k, header.blockLen, header.sessionId, header.totalLen);
+    decoder = header.flags & FLAG_GF27 ? new GF27Decoder(header.k, header.blockLen, header.sessionId, header.totalLen) : new LTDecoder(header.k, header.blockLen, header.sessionId, header.totalLen);
     streamKey = identity;
     reportSessionId = header.sessionId;
     startTs = performance.now();
@@ -933,7 +935,7 @@ function onDecoded(bytes: Uint8Array, box?: SymbolBox, info?: SymbolInfo) {
   }
   minSeq = Math.min(minSeq, header.seq);
   maxSeq = Math.max(maxSeq, header.seq);
-  decoder.addFrame(header.seq, block);
+  try { decoder.addFrame(header.seq, block); } catch { void finish(new Uint8Array(0), false, (performance.now() - startTs) / 1000); return; }
   updateProgressEstimate();
 
   if (decoder.isComplete) {
@@ -990,7 +992,7 @@ function updateProgressEstimate() {
 function goodputKbs(elapsed: number): number {
   if (!decoder) return 0;
   return (
-    ((decoder.framesNew - decoder.framesRedundant) * decoder.blockLen) /
+    ((decoder.framesNew - decoder.framesRedundant) * (decoder instanceof GF27Decoder ? rawBlockLen(decoder.blockLen) : decoder.blockLen)) /
     expectedFountainOverhead(decoder.k) /
     1024 /
     Math.max(0.1, elapsed)
