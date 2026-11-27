@@ -32,6 +32,9 @@ jobs:
       - run: npm run build
         env:
           VITE_SITE_URL: https://xulytiengviet.github.io/QRtransfer/
+      - run: npm run build:standalone
+      - name: Publish portable QR sender and receiver
+        run: cp dist-standalone/*.html dist/
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
