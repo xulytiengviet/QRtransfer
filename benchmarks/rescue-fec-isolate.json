@@ -1,0 +1,73 @@
+{
+  "kind": "synthetic loopback of actual HTML core; not microphone/camera field data",
+  "cv": {
+    "ok": true,
+    "tests": 23,
+    "failures": []
+  },
+  "cases": [
+    {
+      "text": "Cần cứu hộ, 5 người.",
+      "trits": 342,
+      "erasure6": true,
+      "substitution1": true,
+      "audio": true,
+      "light": true,
+      "legacy": true
+    },
+    {
+      "text": "tôi yêu tiếng Việt",
+      "trits": 342,
+      "erasure6": true,
+      "substitution1": true,
+      "audio": true,
+      "light": true,
+      "legacy": true
+    },
+    {
+      "text": "SOS 112",
+      "trits": 180,
+      "erasure6": true,
+      "substitution1": true,
+      "audio": true,
+      "light": true,
+      "legacy": true
+    },
+    {
+      "text": "Đường ngập 2m 🚨",
+      "trits": 342,
+      "erasure6": true,
+      "substitution1": true,
+      "audio": true,
+      "light": true,
+      "legacy": true
+    },
+    {
+      "text": "á",
+      "trits": 126,
+      "erasure6": true,
+      "substitution1": true,
+      "audio": true,
+      "light": true,
+      "legacy": true
+    },
+    {
+      "text": "sẽ hề mồ mộ võ",
+      "trits": 180,
+      "erasure6": true,
+      "substitution1": true,
+      "audio": true,
+      "light": true,
+      "legacy": true
+    },
+    {
+      "text": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "trits": 666,
+      "erasure6": true,
+      "substitution1": true,
+      "audio": true,
+      "light": true,
+      "legacy": true
+    }
+  ]
+}
