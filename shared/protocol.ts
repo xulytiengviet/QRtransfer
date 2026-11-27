@@ -57,6 +57,7 @@
 // all moved.
 
 
+import { valid as validGF27 } from "./gf27.mjs";
 import { OpticalError } from "./optical-error";
 export const HEADER_LEN = 22;
 
@@ -112,7 +113,8 @@ export const FLAG_ENCRYPTED = 0x01;
 /**
  * Critical flag bits this build can actually honour — currently none.
  */
-const SUPPORTED_FLAGS = 0x00;
+export const FLAG_GF27 = 0x02;
+const SUPPORTED_FLAGS = FLAG_GF27;
 export const MAX_FILE_BYTES = 64 * 1024 * 1024;
 /**
  * One place for the number, so the picker label, the rejection message and
@@ -459,6 +461,7 @@ export function classifyFrame(bytes: Uint8Array): FrameVerdict {
   const blockLen = dv.getUint16(12, true);
   const totalLen = dv.getUint32(14, true);
   if (k === 0 || blockLen === 0 || totalLen === 0) return { kind: "malformed" };
+  if ((bytes[3]! & FLAG_GF27) && !validGF27(k, blockLen, totalLen)) return { kind: "malformed" };
   if (bytes.length !== HEADER_LEN + blockLen) return { kind: "malformed" };
   return { kind: "ok" };
 }

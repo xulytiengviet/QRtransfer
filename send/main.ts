@@ -41,6 +41,8 @@ import {
   sourceBlockCount,
 } from "../shared/frame-capacity";
 import { LTEncoder } from "../shared/fountain";
+import { GF27Encoder, rawBlockLen } from "../shared/gf27.mjs";
+import { FLAG_GF27 } from "../shared/protocol";
 import { MAX_SNIPPET_BYTES, packSnippet } from "../shared/snippet";
 import {
   MAX_FILE_BYTES,
@@ -100,11 +102,12 @@ const spec = (id: string) => document.getElementById(id)!;
 function showStreamPanels(visible: boolean): void {
   streamSpecs.hidden = !visible;
   footerHint.hidden = !visible;
-  exportPanel.hidden = !visible;
-  if (visible) void updateExportEstimate();
+  exportPanel.hidden = !visible || cfgCodec.value === "gf27";
+  if (visible && cfgCodec.value !== "gf27") void updateExportEstimate();
 }
 
 const openShareDialog = wireShareDialog();
+const cfgCodec = document.getElementById("cfg-codec") as HTMLSelectElement;
 const cfgFps = document.getElementById("cfg-fps") as HTMLSelectElement;
 const cfgBytes = document.getElementById("cfg-bytes") as HTMLSelectElement;
 const cfgEcc = document.getElementById("cfg-ecc") as HTMLSelectElement;
@@ -175,7 +178,7 @@ function currentExportFormat(): ExportFormat {
  *  reporting owns the line. */
 let estimateRun = 0;
 async function updateExportEstimate(): Promise<void> {
-  if (activeExport || !selectedFile) return;
+  if (activeExport || !selectedFile || cfgCodec.value === "gf27") return;
   const run = ++estimateRun;
   const frameBytes = Number(cfgBytes.value);
   const gridCodes = Number(cfgGrid.value) || 1;
@@ -222,7 +225,7 @@ async function runExport(): Promise<void> {
     activeExport.cancelled = true;
     return;
   }
-  if (!selectedFile) return;
+  if (!selectedFile || cfgCodec.value === "gf27") return;
   const run = { cancelled: false };
   activeExport = run;
   exportButton.textContent = msg.send.exportCancel;
@@ -451,7 +454,7 @@ async function main() {
   }
   applyMode();
   window.addEventListener("resize", () => resizeDisplay?.());
-  for (const el of [cfgFps, cfgBytes, cfgEcc, cfgGrid, cfgSize]) {
+  for (const el of [cfgFps, cfgBytes, cfgEcc, cfgGrid, cfgSize, cfgCodec]) {
     el.addEventListener("change", () => void startStream());
   }
   for (const el of [cfgExportFormat, cfgExportFps, cfgExportScale, cfgExportCycles]) {
@@ -512,7 +515,11 @@ async function startStream(revealStage = false) {
     );
     return;
   }
-  const encoder = new LTEncoder(payload, blockLen, sessionId);
+  const gf27 = cfgCodec.value === "gf27";
+  if (gf27 && Math.ceil(payload.length / rawBlockLen(blockLen)) > MAX_SOURCE_BLOCKS) {
+    showError("GF(27): increase bytes / frame to carry this file."); return;
+  }
+  const encoder = gf27 ? new GF27Encoder(payload, blockLen, sessionId) : new LTEncoder(payload, blockLen, sessionId);
   const header: FrameHeader = {
     sessionId,
     seq: 0,
@@ -523,7 +530,7 @@ async function startStream(revealStage = false) {
     // No feature bits: this build sends the plain v3 format (see FLAG_* in
     // protocol.ts). Spelled out rather than defaulted so adding a flag is a
     // decision made here, not an omission.
-    flags: 0,
+    flags: gf27 ? FLAG_GF27 : 0,
   };
 
   let version: number | undefined; // locked after the first frame
@@ -625,7 +632,7 @@ async function startStream(revealStage = false) {
       spec("spec-payload").textContent = `${name} · ${formatBytesL(fileSize)}`;
       spec("spec-compression").textContent =
         compression === "gzip" ? msg.send.gzipTo(formatBytesL(transmittedSize)) : msg.send.compressionNone;
-      spec("spec-k").textContent = `K = ${encoder.k}`;
+      spec("spec-k").textContent = `K = ${encoder.k} · ${gf27 ? "GF(27)" : "Binary LT"}`;
       showStreamPanels(true);
       // The status line is built by hand: setStatus is textContent-only, and
       // the next setStatus wiping these children out is exactly right.
