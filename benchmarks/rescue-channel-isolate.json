@@ -1,0 +1,56 @@
+{
+  "kind": "synthetic signal perturbations, not dBA/lux/rain/distance or battery measurements",
+  "seed": 42,
+  "message": "Cần cứu hộ 5 người WGS84 10.123456,106.123456 ±12m manual",
+  "trits": 720,
+  "runs": [
+    {
+      "channel": "audio",
+      "noiseAmplitude": 0,
+      "ok": true
+    },
+    {
+      "channel": "audio",
+      "noiseAmplitude": 0.015,
+      "ok": true
+    },
+    {
+      "channel": "audio",
+      "noiseAmplitude": 0.05,
+      "ok": true
+    },
+    {
+      "channel": "audio",
+      "noiseAmplitude": 0.1,
+      "ok": true
+    },
+    {
+      "channel": "light",
+      "baseDigitalLevel": 40,
+      "stepDigitalLevel": 90,
+      "jitterDigitalLevel": 0,
+      "ok": true
+    },
+    {
+      "channel": "light",
+      "baseDigitalLevel": 15,
+      "stepDigitalLevel": 25,
+      "jitterDigitalLevel": 4,
+      "ok": true
+    },
+    {
+      "channel": "light",
+      "baseDigitalLevel": 5,
+      "stepDigitalLevel": 18,
+      "jitterDigitalLevel": 3,
+      "ok": true
+    },
+    {
+      "channel": "light",
+      "baseDigitalLevel": 5,
+      "stepDigitalLevel": 9,
+      "jitterDigitalLevel": 3,
+      "ok": false
+    }
+  ]
+}
